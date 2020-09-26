@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
-class AddBookMarkPage extends StatelessWidget {
+class AddBookMarkPage extends StatefulWidget {
+  @override
+  _AddBookMarkPageState createState() => _AddBookMarkPageState();
+}
+
+class _AddBookMarkPageState extends State<AddBookMarkPage> {
+  final _titleTextController = TextEditingController();
+
+  final _linkTextController = TextEditingController();
+
+  final _linkFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +28,11 @@ class AddBookMarkPage extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
+              onFieldSubmitted: (textInput) {
+                FocusScope.of(context).requestFocus(_linkFocusNode);
+              },
+              controller: _titleTextController,
+              textInputAction: TextInputAction.next,
               autofocus: true,
               decoration: InputDecoration(
                   icon: Icon(Icons.title),
@@ -28,6 +44,8 @@ class AddBookMarkPage extends StatelessWidget {
               height: 16.0,
             ),
             TextFormField(
+              controller: _linkTextController,
+              focusNode: _linkFocusNode,
               decoration: InputDecoration(
                   icon: Icon(Icons.link),
                   labelText: "URL",
@@ -38,5 +56,13 @@ class AddBookMarkPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _linkFocusNode.dispose();
+    _linkTextController.dispose();
+    _titleTextController.dispose();
+    super.dispose();
   }
 }
