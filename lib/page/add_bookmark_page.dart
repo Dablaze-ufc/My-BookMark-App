@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project/model/bookmark.dart';
 
 class AddBookMarkPage extends StatefulWidget {
   @override
@@ -25,6 +26,7 @@ class _AddBookMarkPageState extends State<AddBookMarkPage> {
             String link = _linkTextController.text;
             Scaffold.of(context).hideCurrentSnackBar();
             if (isInputValid(title, link)) {
+              Navigator.pop(context, Bookmark(title, link));
             } else {
               showInputError(context, title, link);
             }
@@ -82,9 +84,9 @@ class _AddBookMarkPageState extends State<AddBookMarkPage> {
 
   void showInputError(BuildContext context, String title, String link) {
     if (title.isEmpty) {
-      displaySnackBar(context, "Tittle is Empty");
+      displaySnackBar(context, "Tittle cannot be Empty");
     } else if (link.isEmpty) {
-      displaySnackBar(context, "Link is Empty");
+      displaySnackBar(context, "Link cannot be Empty");
     }
   }
 
