@@ -18,10 +18,20 @@ class _AddBookMarkPageState extends State<AddBookMarkPage> {
       appBar: AppBar(
         title: Text("Add a new Bookmark"),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.check),
-        backgroundColor: Colors.green,
+      floatingActionButton: Builder(
+        builder: (BuildContext context) => FloatingActionButton(
+          onPressed: () {
+            String title = _titleTextController.text;
+            String link = _linkTextController.text;
+            Scaffold.of(context).hideCurrentSnackBar();
+            if (isInputValid(title, link)) {
+            } else {
+              showInputError(context, title, link);
+            }
+          },
+          child: Icon(Icons.check),
+          backgroundColor: Colors.green,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -64,5 +74,23 @@ class _AddBookMarkPageState extends State<AddBookMarkPage> {
     _linkTextController.dispose();
     _titleTextController.dispose();
     super.dispose();
+  }
+
+  bool isInputValid(String title, String link) {
+    return title.isNotEmpty && link.isNotEmpty;
+  }
+
+  void showInputError(BuildContext context, String title, String link) {
+    if (title.isEmpty) {
+      displaySnackBar(context, "Tittle is Empty");
+    } else if (link.isEmpty) {
+      displaySnackBar(context, "Link is Empty");
+    }
+  }
+
+  void displaySnackBar(BuildContext context, String message) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+    ));
   }
 }
