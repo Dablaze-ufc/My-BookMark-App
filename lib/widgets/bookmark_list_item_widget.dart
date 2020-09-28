@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/model/bookmark.dart';
-import 'package:new_project/page/view_bookmark_page.dart';
 import 'package:new_project/util/navigation_util.dart';
 
 class BookmarkListItemWidget extends StatelessWidget {
-  Bookmark _bookmark;
+  final Bookmark _bookmark;
 
   BookmarkListItemWidget(this._bookmark);
 
@@ -13,7 +12,7 @@ class BookmarkListItemWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12),
       child: InkWell(
-        onTap: () => navigateToBookmarkDetailPage(context),
+        onTap: () => navigateToBookmarkDetailPage(_bookmark, context),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

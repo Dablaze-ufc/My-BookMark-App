@@ -1,31 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:new_project/model/bookmark.dart';
+import 'package:new_project/widgets/view_web_page_widget.dart';
 
-class ViewBookmarkedPage extends StatefulWidget {
-  @override
-  _ViewBookmarkedPageState createState() => _ViewBookmarkedPageState();
-}
+class ViewBookmarkedPage extends StatelessWidget {
+  Bookmark bookmark;
 
-class _ViewBookmarkedPageState extends State<ViewBookmarkedPage> {
-  var _isLoadingWebPage = true;
+  ViewBookmarkedPage(this.bookmark);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("View Bookmark")),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          WebView(
-              onPageFinished: (url) {
-                setState(() {
-                  _isLoadingWebPage = false;
-                });
-              },
-              initialUrl: "https://google.com"),
-          _isLoadingWebPage ? CircularProgressIndicator() : Container(),
-        ],
-      ),
-    );
+        appBar: AppBar(title: Text(bookmark.tittle)),
+        body: ViewWebPageWidget(bookmark.link));
   }
 }
